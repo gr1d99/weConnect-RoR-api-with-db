@@ -42,6 +42,7 @@ end
 
 group :test do
   gem 'coveralls', require: false
+  gem 'faker'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end
