@@ -1,0 +1,67 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+machine:
+  environment:
+    CC_TEST_REPORTER_ID: $CODE_CLIMATE_TEST_REPORTER_ID
+
+dependencies:
+  post:
+    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    - chmod +x ./cc-test-reporter
+
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+       - image: circleci/ruby:2.4.1-node-browsers
+         environment:
+           PGHOST: localhost
+           PGUSER: weConnectRORWithDB
+           RAILS_ENV: test
+
+       - image: postgres:9.5
+         environment:
+           POSTGRES_USER: weConnectRORWithDB
+           POSTGRES_DB: we_connect_ror_with_db_test
+           POSTGRES_PASSWORD: ""
+
+    working_directory: ~/weConnect-RoR-api-with-db
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Database setup
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:migrate
+      - run: bundle exec rake db:schema:load
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            ./cc-test-reporter before-build
+            COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN bundle exec rspec spec
+            ./cc-test-reporter after-build --exit-code $EXIT_CODE
