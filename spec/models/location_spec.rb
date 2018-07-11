@@ -5,7 +5,12 @@ RSpec.describe Location, type: :model do
     it { should validate_presence_of(:address) }
   end
 
+  context 'associations' do
+    it { should have_and_belong_to_many(:businesses) }
+  end
+
   context 'database columns' do
+    it { should have_db_column(:id).of_type(:integer) }
     it { should have_db_column(:address).of_type(:string) }
   end
 

@@ -4,6 +4,9 @@ engines:
     exclude_paths:
     - "vendor/"
     - "db/"
+    checks:
+      Rubocop/Style/Documentation:
+        enabled: false
 
 exclude_paths:
 - "public/assets/"
