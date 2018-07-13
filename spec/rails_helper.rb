@@ -7,6 +7,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'coveralls'
 require 'rspec/rails'
 require 'simplecov'
+require './spec/support/authorize_api_request_helper'
 Coveralls.wear!
 SimpleCov.start
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -59,6 +60,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
+
+  config.include AuthorizeApiRequestHelper
 end
 
 Shoulda::Matchers.configure do |config|
