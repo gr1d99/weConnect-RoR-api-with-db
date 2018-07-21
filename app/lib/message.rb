@@ -26,4 +26,8 @@ class Message
   def self.account_created
     'Account created successfully.'
   end
+
+  def self.category_created
+    'Category created successfully'
+  end
 end
