@@ -1,6 +1,7 @@
 class AuthenticationController < ApplicationController
   skip_before_action :authorize_request, only: :login
   skip_before_action :authorize_request, only: :register
+
   def login
     token =
       AuthenticateUser.new(login_params[:email], login_params[:password]).call
