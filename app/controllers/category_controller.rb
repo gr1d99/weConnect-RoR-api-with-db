@@ -1,12 +1,18 @@
 class CategoryController < ApplicationController
+  def index
+    categories = Category.all
+
+    render json: { categories: categories }, status: :ok
+  end
+
   def create
     category = Category.create!(category_params)
     response = { category: category, message: Message.category_created }
+
     render json: response, status: :created
   end
 
   def update
-    id = update_params[:id]
     category = find_category
     category.update(update_params)
     response = { category: category, message: Message.category_updated }
