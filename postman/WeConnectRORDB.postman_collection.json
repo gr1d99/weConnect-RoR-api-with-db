@@ -237,6 +237,37 @@
 						"description": "Retrieve all categories created"
 					},
 					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:3000/category/[id]",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"[id]"
+							]
+						},
+						"description": "Retrieve specific category, replace [id] with actual category id in the url"
+					},
+					"response": []
 				}
 			]
 		}

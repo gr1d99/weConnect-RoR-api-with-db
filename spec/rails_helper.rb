@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'simplecov'
 require 'database_cleaner'
 require './spec/support/authorize_api_request_helper'
+
 Coveralls.wear!
 SimpleCov.start
 

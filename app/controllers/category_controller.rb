@@ -5,6 +5,11 @@ class CategoryController < ApplicationController
     render json: { categories: categories }, status: :ok
   end
 
+  def show
+    category = find_category
+    render json: { category: category }, status: :ok
+  end
+
   def create
     category = Category.create!(category_params)
     response = { category: category, message: Message.category_created }
