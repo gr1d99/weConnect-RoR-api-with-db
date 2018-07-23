@@ -7,11 +7,18 @@ class CategoryController < ApplicationController
 
   def update
     id = update_params[:id]
-    category = find_category(id)
+    category = find_category
     category.update(update_params)
     response = { category: category, message: Message.category_updated }
 
     render json: response, status: :ok
+  end
+
+  def destroy
+    category = find_category
+    category.destroy
+
+    render json: { message: Message.category_deleted }, status: :ok
   end
 
   private
@@ -24,7 +31,7 @@ class CategoryController < ApplicationController
     params.permit(:name, :id)
   end
 
-  def find_category(id)
-    Category.find(id)
+  def find_category
+    Category.find(params[:id])
   end
 end

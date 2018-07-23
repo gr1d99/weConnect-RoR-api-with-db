@@ -34,4 +34,8 @@ class Message
   def self.category_updated
     'Category updated successfully'
   end
+
+  def self.category_deleted
+    'Category deleted successfully'
+  end
 end
