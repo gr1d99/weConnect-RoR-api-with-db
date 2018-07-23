@@ -30,4 +30,8 @@ class Message
   def self.category_created
     'Category created successfully'
   end
+
+  def self.category_updated
+    'Category updated successfully'
+  end
 end
