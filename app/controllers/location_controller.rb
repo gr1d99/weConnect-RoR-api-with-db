@@ -3,6 +3,10 @@ class LocationController < ApplicationController
     render json: { location: location_object }, status: :ok
   end
 
+  def index
+    render json: { locations: Location.all }, status: :ok
+  end
+
   def create
     location = Location.create!(location_params)
     response = { message: Message.location_created, location: location }
