@@ -38,4 +38,8 @@ class Message
   def self.category_deleted
     'Category deleted successfully'
   end
+
+  def self.location_created
+    'Location created successfully'
+  end
 end

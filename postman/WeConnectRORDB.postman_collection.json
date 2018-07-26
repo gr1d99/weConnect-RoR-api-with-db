@@ -251,21 +251,43 @@
 								}
 							]
 						},
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
 						"body": {},
 						"url": {
-							"raw": "localhost:3000/category/[id]",
+							"raw": "localhost:3000/location",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"category",
-								"[id]"
+								"location"
 							]
 						},
 						"description": "Retrieve specific category, replace [id] with actual category id in the url"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "location",
+			"description": "",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
