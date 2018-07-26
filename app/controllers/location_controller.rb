@@ -17,6 +17,10 @@ class LocationController < ApplicationController
     render json: response, status: 200
   end
 
+  def destroy
+    location_object.delete
+    render json: { message: Message.location_deleted }, status: :ok
+  end
 
   private
 

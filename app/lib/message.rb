@@ -50,4 +50,8 @@ class Message
   def self.location_not_changed
     'No changes made'
   end
+
+  def self.location_deleted
+    'Location deleted successfully'
+  end
 end
