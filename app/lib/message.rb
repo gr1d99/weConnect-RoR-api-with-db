@@ -42,4 +42,12 @@ class Message
   def self.location_created
     'Location created successfully'
   end
+
+  def self.location_updated
+    'Location successfully updated'
+  end
+
+  def self.location_not_changed
+    'No changes made'
+  end
 end
