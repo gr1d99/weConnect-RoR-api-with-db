@@ -14,7 +14,6 @@ Coveralls.wear!
 SimpleCov.start
 
 DatabaseCleaner.strategy = :truncation
-DatabaseCleaner.clean
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -69,16 +68,13 @@ RSpec.configure do |config|
 
   config.include AuthorizeApiRequestHelper
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  config.before(:suite) { DatabaseCleaner.clean_with :truncation }
 
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
-  end
+  config.before(:each) { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
+
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each) { DatabaseCleaner.clean }
 end
 
 Shoulda::Matchers.configure do |config|

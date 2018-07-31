@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Business, type: :model do
+  let(:business) { create(:business) }
   context 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name) }
+    it { should validate_presence_of(:categories) }
+    it { should validate_presence_of(:locations) }
   end
 
   context 'association' do
@@ -49,23 +52,12 @@ RSpec.describe Business, type: :model do
 
     it 'creates locations' do
       expect(Business.count).to eq(1)
-      expect(Location.count).to eq(0)
-      expect(business).not_to be_nil
-
-      business.locations.create(address: Faker::Address.full_address)
-
-      expect(business.locations.count).to eq(1)
       expect(Location.count).to eq(1)
     end
 
     it 'creates categories' do
       expect(Business.count).to eq(1)
-      expect(Category.count).to eq(0)
-      expect(business).not_to be_nil
-
-      business.categories.create(name: 'some category')
-
-      expect(business.categories.count).to eq(1)
+      expect(Category.count).to eq(1)
     end
   end
 end
