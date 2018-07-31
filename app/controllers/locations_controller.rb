@@ -1,4 +1,4 @@
-class LocationController < ApplicationController
+class LocationsController < ApplicationController
   def show
     render json: { location: location_object }, status: :ok
   end
