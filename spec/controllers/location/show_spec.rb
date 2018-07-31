@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LocationController, type: :controller do
+RSpec.describe LocationsController, type: :controller do
   let(:json) { JSON.parse(response.body) }
   let(:user) { create(:user) }
   let(:headers) { valid_headers }
