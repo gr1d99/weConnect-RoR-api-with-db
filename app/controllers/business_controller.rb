@@ -3,11 +3,19 @@ class BusinessController < ApplicationController
     render json: { businesses: Business.all }, status: :ok
   end
 
+  def show
+    render json: business_response(business), status: :ok
+  end
+
   def create
     business = Business.create!(
-      name: business_params[:name], categories: [category], locations: [location]
+      name: business_params[:name],
+      categories: [category],
+      locations: [location]
     )
-    render json: { business: business }, status: :created
+    response = { business: business, message: Message.business_created }
+
+    render json: response, status: :created
   end
 
   private
@@ -18,6 +26,10 @@ class BusinessController < ApplicationController
       :location_id,
       :category_id
     )
+  end
+
+  def business
+    Business.find(params[:id])
   end
 
   def location
