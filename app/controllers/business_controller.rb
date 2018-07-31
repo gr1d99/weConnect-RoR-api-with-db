@@ -26,6 +26,12 @@ class BusinessController < ApplicationController
     render json: response, status: :ok
   end
 
+  def destroy
+    business.destroy
+
+    render json: { message: Message.business_deleted }, status: :ok
+  end
+
   private
 
   def business_params
