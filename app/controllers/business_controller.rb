@@ -18,6 +18,14 @@ class BusinessController < ApplicationController
     render json: response, status: :created
   end
 
+  def update
+    business.update(name: business_params[:name])
+    business.update_location(business_params[:location_id])
+    business.update_category(business_params[:category_id])
+    response = { business: business_response(business), message: Message.business_updated }
+    render json: response, status: :ok
+  end
+
   private
 
   def business_params

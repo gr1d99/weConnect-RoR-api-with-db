@@ -43,10 +43,6 @@ RSpec.describe BusinessController, type: :controller do
           }.merge!(business_params)
         end
 
-        it do
-          p json
-        end
-
         it { is_expected.to respond_with(404) }
       end
     end
