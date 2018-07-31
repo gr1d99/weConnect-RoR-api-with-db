@@ -48,6 +48,6 @@ class CategoriesController < ApplicationController
   end
 
   def find_category
-    Category.find(params[:id])
+    business.categories.find(params[:id])
   end
 end
