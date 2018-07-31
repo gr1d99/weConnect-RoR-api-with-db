@@ -12,6 +12,7 @@ class CategoriesController < ApplicationController
 
   def create
     category = Category.create!(category_params)
+    business.categories.append(category)
     response = { category: category, message: Message.category_created }
 
     render json: response, status: :created
@@ -33,6 +34,10 @@ class CategoriesController < ApplicationController
   end
 
   private
+
+  def business
+    Business.find(params[:business_id])
+  end
 
   def category_params
     params.permit(:name)

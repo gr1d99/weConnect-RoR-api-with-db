@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
   resources :businesses do
     resources :locations
+    resources :categories
   end
-  resources :categories
 end

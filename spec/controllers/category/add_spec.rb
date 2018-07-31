@@ -4,11 +4,14 @@ RSpec.describe CategoriesController, type: :controller do
   let(:json) { JSON.parse(response.body) }
 
   describe '#POST .create' do
-    let(:category_attributes) { attributes_for(:category) }
+    let(:business) { create(:business) }
+    let(:category_attributes) { { name: Faker::Name.name } }
 
     context 'when request is not authenticated' do
       before do
-        post :create, params: category_attributes
+        post :create, params: {
+          business_id: business.id
+        }.merge!(category_attributes)
       end
 
       it { is_expected.to respond_with(422) }
@@ -28,7 +31,9 @@ RSpec.describe CategoriesController, type: :controller do
 
       context 'params are valid' do
         before do
-          post :create, params: category_attributes
+          post :create, params: {
+            business_id: business.id
+          }.merge!(category_attributes)
         end
 
         it { is_expected.to respond_with(201) }
@@ -39,7 +44,9 @@ RSpec.describe CategoriesController, type: :controller do
 
         context 'when name is duplicated' do
           before do
-            post :create, params: category_attributes
+            post :create, params: {
+              business_id: business.id
+            }.merge!(category_attributes)
           end
 
           it 'returns failure message' do
@@ -51,7 +58,7 @@ RSpec.describe CategoriesController, type: :controller do
       end
 
       context 'params are invalid' do
-        before { post :create, params: {} }
+        before { post :create, params: { business_id: business.id } }
 
         it { is_expected.to respond_with(422) }
 

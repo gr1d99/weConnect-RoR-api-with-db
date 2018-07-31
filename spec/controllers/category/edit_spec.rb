@@ -7,13 +7,17 @@ RSpec.describe CategoriesController, type: :controller do
     context 'when request is authenticated' do
       let(:user) { create(:user) }
       let(:headers) { valid_headers }
-      let(:category) { create(:category) }
-      let(:valid_attributes) { attributes_for(:category) }
+      let(:business) { create(:business) }
+      let(:category) { business.categories.last }
+      let(:valid_attributes) { { name: 'Updated category' } }
 
       context 'when all attributes are provided' do
         before do
           request.headers.merge!(headers)
-          post :update, params: { id: category.id }.merge!(valid_attributes)
+          post :update, params: {
+            business_id: business.id,
+            id: category.id
+          }.merge!(valid_attributes)
 
         end
 
@@ -27,7 +31,10 @@ RSpec.describe CategoriesController, type: :controller do
       context 'when id param is invalid' do
         before do
           request.headers.merge!(headers)
-          post :update, params: { id: 123456 }
+          post :update, params: {
+            business_id: business.id,
+            id: 123456
+          }
         end
 
         it { is_expected.to respond_with(404) }
@@ -40,7 +47,10 @@ RSpec.describe CategoriesController, type: :controller do
 
     context 'when request is not authenticated' do
       before do
-        post :update, params: { id: 123456 }
+        post :update, params: {
+          business_id: 23,
+          id: 123456
+        }
       end
 
       it { is_expected.to respond_with(422) }

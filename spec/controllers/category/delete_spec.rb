@@ -6,7 +6,8 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'when request is authenticated' do
     let(:user) { create(:user) }
     let(:headers) { valid_headers }
-    let(:category) { create(:category) }
+    let(:business) { create(:business) }
+    let(:category) { business.categories.last }
 
     before do
       request.headers.merge!(headers)
@@ -14,7 +15,10 @@ RSpec.describe CategoriesController, type: :controller do
 
     context 'when id exists' do
       before do
-        delete :destroy, params: { id: category.id }
+        delete :destroy, params: {
+          business_id: business.id,
+          id: category.id
+        }
       end
 
       it { is_expected.to respond_with(200) }
@@ -26,7 +30,10 @@ RSpec.describe CategoriesController, type: :controller do
 
     context 'when id does not exist' do
       before do
-        delete :destroy, params: { id: 'jhgf1234' }
+        delete :destroy, params: {
+          business_id: business.id,
+          id: 'jhgf1234'
+        }
       end
 
       it { is_expected.to respond_with(404) }
