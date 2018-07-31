@@ -2,17 +2,15 @@ require 'rails_helper'
 
 RSpec.describe BusinessesController, type: :controller do
   let(:json) { JSON.parse(response.body) }
-  let(:user) { create(:user) }
-  let(:headers) { valid_headers }
 
   describe '.get' do
-    before do
-      request.headers.merge!(headers)
-    end
-
     context 'when business exists' do
+      let(:business) { create(:business) }
+      let(:user) { business.user }
+      let(:headers) { valid_headers }
+
       before do
-        create(:business)
+        request.headers.merge!(headers)
         get :index
       end
 
@@ -25,7 +23,11 @@ RSpec.describe BusinessesController, type: :controller do
     end
 
     context 'when business does not exist' do
+      let(:user) { create(:user) }
+      let(:headers) { valid_headers }
+
       before do
+        request.headers.merge!(headers)
         get :index
       end
 

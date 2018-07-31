@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe BusinessesController, type: :controller do
   let(:json) { JSON.parse(response.body) }
-  let(:user) { create(:user) }
-  let(:headers) { valid_headers }
   let(:business) { create(:business) }
+  let(:user) { business.user }
+  let(:headers) { valid_headers }
 
   describe '.get /show' do
     before do
@@ -19,7 +19,6 @@ RSpec.describe BusinessesController, type: :controller do
       it { is_expected.to respond_with(200) }
 
       it 'returns business details' do
-        p json
         expect(json['business']).not_to be_nil
         expect(json['business']['locations']).not_to be_nil
         expect(json['business']['categories']).not_to be_nil
@@ -28,6 +27,7 @@ RSpec.describe BusinessesController, type: :controller do
 
     context 'when business does not exist' do
       before do
+        user.businesses.delete_all
         get :show, params: { id: 1098 }
       end
 

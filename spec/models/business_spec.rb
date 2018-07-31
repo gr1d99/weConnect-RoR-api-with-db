@@ -10,6 +10,7 @@ RSpec.describe Business, type: :model do
   context 'association' do
     it { should have_and_belong_to_many(:categories) }
     it { should have_and_belong_to_many(:locations) }
+    it { should belong_to(:user) }
   end
 
   context 'database columns' do

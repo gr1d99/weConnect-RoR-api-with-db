@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    categories = Category.all
+    categories = business.categories.all
 
     render json: { categories: categories }, status: :ok
   end
@@ -34,10 +34,6 @@ class CategoriesController < ApplicationController
   end
 
   private
-
-  def business
-    Business.find(params[:business_id])
-  end
 
   def category_params
     params.permit(:name)

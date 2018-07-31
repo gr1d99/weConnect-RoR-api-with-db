@@ -5,7 +5,7 @@ RSpec.describe CategoriesController, type: :controller do
   let(:business) { create(:business) }
 
   context '.get' do
-    let(:user) { create(:user) }
+    let(:user) { business.user }
     let(:headers) { valid_headers }
 
     before do
