@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CategoryController, type: :controller do
+RSpec.describe CategoriesController, type: :controller do
   let(:json) { JSON.parse(response.body) }
   let(:user) { create(:user) }
   let(:headers) { valid_headers }
