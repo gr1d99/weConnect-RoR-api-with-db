@@ -60,4 +60,27 @@ RSpec.describe Business, type: :model do
       expect(Category.count).to eq(1)
     end
   end
+
+  describe 'instance methods' do
+    subject(:business) { described_class.new }
+
+    describe 'update_location' do
+      let(:location) { create(:location) }
+
+      it 'increments locations by 1' do
+
+        expect { business.update_location(location.id) }
+          .to change { business.locations.length }.from(0).to(1)
+      end
+    end
+
+    describe 'update_category' do
+      let(:category) { create(:category) }
+
+      it 'increments categories by 1' do
+        expect { business.update_category(category.id) }
+          .to change { business.categories.length }.from(0).to(1)
+      end
+    end
+  end
 end
