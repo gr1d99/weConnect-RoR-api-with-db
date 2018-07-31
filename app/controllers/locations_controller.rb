@@ -8,8 +8,12 @@ class LocationsController < ApplicationController
   end
 
   def create
-    location = Location.create!(location_params)
-    response = { message: Message.location_created, location: location }
+    business.locations.create!(location_params)
+    response = {
+      message: Message.location_created,
+      location: business.locations.last
+    }
+
     render json: response, status: :created
   end
 
@@ -32,6 +36,10 @@ class LocationsController < ApplicationController
   end
 
   private
+
+  def business
+    Business.find(params[:business_id])
+  end
 
   def location_params
     params.permit(:address)

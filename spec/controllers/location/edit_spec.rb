@@ -4,7 +4,8 @@ RSpec.describe LocationsController, type: :controller do
   let(:json) { JSON.parse(response.body) }
   let(:user) { create(:user) }
   let(:headers) { valid_headers }
-  let(:location) { create(:location) }
+  let(:business) { create(:business) }
+  let(:location) { business.locations.last }
 
   describe '.put' do
     before do
@@ -13,8 +14,13 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when request is valid' do
       before do
-        put :update, params: { id: location.id, address: Faker::Address.full_address }
+        put :update, params: {
+          business_id: business.id,
+          id: location.id,
+          address: Faker::Address.full_address
+        }
       end
+
       it { is_expected.to respond_with(200) }
 
       it 'does not delete or add any record' do
@@ -28,7 +34,11 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when there is no change' do
       before do
-        put :update, params: { id: location.id, address: location.address }
+        put :update, params: {
+          business_id: business.id,
+          id: location.id,
+          address: location.address
+        }
       end
 
       it 'returns no changes' do
@@ -38,8 +48,12 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when no attributes are provided' do
       before do
-        put :update, params: { id: location.id }
+        put :update, params: {
+          business_id: business.id,
+          id: location.id
+        }
       end
+
       it 'returns no change made' do
         expect(json['message']).to eq(Message.location_not_changed)
       end
@@ -47,7 +61,10 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when location does not exist' do
       before do
-        put :update, params: { id: 1000 }
+        put :update, params: {
+          business_id: business.id,
+          id: 1000
+        }
       end
 
       it { is_expected.to respond_with(404) }

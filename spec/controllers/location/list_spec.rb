@@ -4,6 +4,9 @@ RSpec.describe LocationsController, type: :controller do
   let(:json) { JSON.parse(response.body) }
   let(:user) { create(:user) }
   let(:headers) { valid_headers }
+  let(:business) { create(:business) }
+  let(:location_1) { Location.create!(address: Faker::Address.full_address) }
+  let(:location_2) { Location.create!(address: Faker::Address.full_address) }
 
   describe '.get' do
     before do
@@ -12,27 +15,14 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when locations exists' do
       before do
-        Location.create!(address: Faker::Address.full_address)
-        Location.create!(address: Faker::Address.full_address)
-
-        get :index
+        business.locations << [location_1, location_2]
+        get :index, params: { business_id: business.id }
       end
 
       it { is_expected.to respond_with(200) }
 
       it 'returns all locations' do
-        expect(json['locations'].length).to eq(Location.count)
-      end
-    end
-
-    context 'when there are no locations' do
-      before do
-        get :index
-      end
-
-      it 'returns an empty array' do
-        expect(json['locations']).to be_a_kind_of(Array)
-        expect(json['locations'].length).to eq(0)
+        expect(json['locations'].length).to eq(business.locations.count)
       end
     end
   end
