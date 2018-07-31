@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :business do
-    name Faker::Company.unique.name
+    sequence(:name) { |n| "#{Faker::Company.unique.name}_#{n}" }
     categories { [create(:category)] }
     locations { [create(:location)] }
   end
