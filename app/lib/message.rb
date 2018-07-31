@@ -62,4 +62,8 @@ class Message
   def self.business_updated
     'Business updated successfully'
   end
+
+  def self.business_deleted
+    'Business deleted successfully'
+  end
 end
