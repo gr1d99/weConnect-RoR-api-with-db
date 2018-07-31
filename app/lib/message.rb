@@ -54,4 +54,8 @@ class Message
   def self.location_deleted
     'Location deleted successfully'
   end
+
+  def self.business_created
+    'Business successfully created'
+  end
 end
