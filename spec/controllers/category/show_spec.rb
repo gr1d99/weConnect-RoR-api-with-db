@@ -4,17 +4,20 @@ RSpec.describe CategoriesController, type: :controller do
   let(:json) { JSON.parse(response.body) }
   let(:user) { create(:user) }
   let(:headers) { valid_headers }
+  let(:business) { create(:business) }
 
   before do
     request.headers.merge!(headers)
   end
 
   context 'when category exists' do
-
-    let(:category) { create(:category) }
+    let(:category) { business.categories.last }
 
     before do
-      get :show, params: { id: category.id }
+      get :show, params: {
+        business_id: business.id,
+        id: category.id
+      }
     end
 
     it { is_expected.to respond_with(200) }
@@ -27,7 +30,10 @@ RSpec.describe CategoriesController, type: :controller do
 
   context 'when category does not exist' do
     before do
-      get :show, params: { id: 234 }
+      get :show, params: {
+        business_id: business.id,
+        id: 234
+      }
     end
 
     it { is_expected.to respond_with(404) }
