@@ -1,8 +1,5 @@
 class Business < ApplicationRecord
   validates :name, presence: true, uniqueness: true
-  validates :categories, presence: true
-  validates :locations, presence: true
-
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :locations
 
@@ -18,5 +15,12 @@ class Business < ApplicationRecord
     category = Category.find(category_id)
 
     categories.append(category) unless categories.include? category
+  end
+
+  def detail
+    business = as_json
+    business[:categories] = categories
+    business[:locations] = locations
+    { business: business }
   end
 end
