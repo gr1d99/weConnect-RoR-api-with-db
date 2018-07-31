@@ -22,7 +22,7 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     describe 'when request is authenticated' do
-      let(:user) { create(:user) }
+      let(:user) { business.user }
       let(:headers) { valid_headers }
 
       before do

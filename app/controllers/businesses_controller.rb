@@ -1,6 +1,6 @@
 class BusinessesController < ApplicationController
   def index
-    render json: { businesses: Business.all }, status: :ok
+    render json: { businesses: businesses }, status: :ok
   end
 
   def show
@@ -8,7 +8,7 @@ class BusinessesController < ApplicationController
   end
 
   def create
-    business = Business.create!(
+    business = @current_user.businesses.create!(
       name: business_params[:name]
     )
     response = { business: business, message: Message.business_created }
@@ -39,6 +39,10 @@ class BusinessesController < ApplicationController
   end
 
   def business
-    Business.find(params[:id])
+    @current_user.businesses.find(params[:id])
+  end
+
+  def businesses
+    @current_user.businesses.all
   end
 end

@@ -4,9 +4,9 @@ RSpec.describe CategoriesController, type: :controller do
   let(:json) { JSON.parse(response.body) }
 
   describe 'when request is authenticated' do
-    let(:user) { create(:user) }
-    let(:headers) { valid_headers }
     let(:business) { create(:business) }
+    let(:user) { business.user }
+    let(:headers) { valid_headers }
     let(:category) { business.categories.last }
 
     before do

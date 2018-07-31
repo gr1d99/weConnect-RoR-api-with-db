@@ -5,9 +5,9 @@ RSpec.describe CategoriesController, type: :controller do
 
   describe '#edit' do
     context 'when request is authenticated' do
-      let(:user) { create(:user) }
-      let(:headers) { valid_headers }
       let(:business) { create(:business) }
+      let(:user) { business.user }
+      let(:headers) { valid_headers }
       let(:category) { business.categories.last }
       let(:valid_attributes) { { name: 'Updated category' } }
 

@@ -4,14 +4,15 @@ class LocationsController < ApplicationController
   end
 
   def index
-    render json: { locations: Location.all }, status: :ok
+    render json: { locations: business.locations.all }, status: :ok
   end
 
   def create
-    business.locations.create!(location_params)
+    location = Location.create!(location_params)
+    business.locations.append(location)
     response = {
       message: Message.location_created,
-      location: business.locations.last
+      location: location
     }
 
     render json: response, status: :created
@@ -36,10 +37,6 @@ class LocationsController < ApplicationController
   end
 
   private
-
-  def business
-    Business.find(params[:business_id])
-  end
 
   def location_params
     params.permit(:address)

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe BusinessesController, type: :controller do
   let(:json) { JSON.parse(response.body) }
-  let(:user) { create(:user) }
   let(:headers) { valid_headers }
   let(:business) { create(:business) }
+  let(:user) { business.user }
 
   describe '#delete' do
     before do

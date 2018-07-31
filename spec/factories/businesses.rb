@@ -3,5 +3,6 @@ FactoryBot.define do
     sequence(:name) { |n| "#{Faker::Company.unique.name}_#{n}" }
     categories { [create(:category)] }
     locations { [create(:location)] }
+    user
   end
 end

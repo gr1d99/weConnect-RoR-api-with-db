@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe LocationsController, type: :controller do
   let(:json) { JSON.parse(response.body) }
-  let(:user) { create(:user) }
+  let(:business) { create(:business) }
+  let(:user) { business.user }
   let(:headers) { valid_headers }
 
   describe '.delete' do
-    let(:business) { create(:business) }
     let(:location) { business.locations.last }
 
     before do
