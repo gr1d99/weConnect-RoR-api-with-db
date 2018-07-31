@@ -5,8 +5,6 @@ RSpec.describe Business, type: :model do
   context 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name) }
-    it { should validate_presence_of(:categories) }
-    it { should validate_presence_of(:locations) }
   end
 
   context 'association' do
@@ -67,19 +65,34 @@ RSpec.describe Business, type: :model do
     describe 'update_location' do
       let(:location) { create(:location) }
 
-      it 'increments locations by 1' do
+      it '.increments locations by 1' do
 
         expect { business.update_location(location.id) }
           .to change { business.locations.length }.from(0).to(1)
       end
     end
 
-    describe 'update_category' do
+    describe '.update_category' do
       let(:category) { create(:category) }
 
       it 'increments categories by 1' do
         expect { business.update_category(category.id) }
           .to change { business.categories.length }.from(0).to(1)
+      end
+    end
+
+    describe '.detail' do
+      let(:business) { create(:business) }
+      subject(:detail) { business.detail }
+
+      it 'returns a hash' do
+        expect(detail).to be_a_kind_of(Hash)
+      end
+
+      it 'has expected keys' do
+        expect(detail[:business]).not_to be_nil
+        expect(detail[:business][:locations]).not_to be_nil
+        expect(detail[:business][:categories]).not_to be_nil
       end
     end
   end

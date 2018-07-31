@@ -13,10 +13,7 @@ RSpec.describe BusinessesController, type: :controller do
 
     context 'when all attributes are given' do
       before do
-        post :create, params: {
-          location_id: business_params[:locations][0].id,
-          category_id: business_params[:categories][0].id
-        }.merge!(business_params)
+        post :create, params: business_params
       end
 
       it { is_expected.to respond_with(201) }
@@ -26,24 +23,16 @@ RSpec.describe BusinessesController, type: :controller do
       end
     end
 
-    describe 'when some params are missing' do
-      context 'when location_id is missing' do
-        before do
-          post :create, params: {
-            category_id: business_params[:categories][0].id
-          }.merge!(business_params)
-        end
-
-        it { is_expected.to respond_with(404) }
+    context 'when name is missing' do
+      before do
+        post :create, params: {}
       end
 
-      context 'when category_id is missing' do
-        before do
-          post :create, params: {
-          }.merge!(business_params)
-        end
+      it { is_expected.to respond_with(422) }
 
-        it { is_expected.to respond_with(404) }
+      it 'returns failure message' do
+        expect(json['message'])
+          .to match(/Validation failed: Name can't be blank/)
       end
     end
   end

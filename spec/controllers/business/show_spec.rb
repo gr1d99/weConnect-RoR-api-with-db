@@ -19,9 +19,10 @@ RSpec.describe BusinessesController, type: :controller do
       it { is_expected.to respond_with(200) }
 
       it 'returns business details' do
+        p json
         expect(json['business']).not_to be_nil
-        expect(json['locations']).not_to be_nil
-        expect(json['categories']).not_to be_nil
+        expect(json['business']['locations']).not_to be_nil
+        expect(json['business']['categories']).not_to be_nil
       end
     end
 
