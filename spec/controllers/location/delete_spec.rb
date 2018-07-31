@@ -6,7 +6,8 @@ RSpec.describe LocationsController, type: :controller do
   let(:headers) { valid_headers }
 
   describe '.delete' do
-    let(:location) { create(:location) }
+    let(:business) { create(:business) }
+    let(:location) { business.locations.last }
 
     before do
       request.headers.merge!(headers)
@@ -14,7 +15,10 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when location exists' do
       before do
-        delete :destroy, params: { id: location.id }
+        delete :destroy, params: {
+          business_id: business.id,
+          id: location.id
+        }
       end
 
       it { is_expected.to respond_with(200) }
@@ -26,7 +30,10 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when location does not exist' do
       before do
-        delete :destroy, params: { id: 67890 }
+        delete :destroy, params: {
+          business_id: business.id,
+          id: 67890
+        }
       end
 
       it { is_expected.to respond_with(404) }

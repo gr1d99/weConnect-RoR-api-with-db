@@ -4,7 +4,7 @@ RSpec.describe LocationsController, type: :controller do
   let(:json) { JSON.parse(response.body) }
   let(:user) { create(:user) }
   let(:headers) { valid_headers }
-  let(:location) { create(:location) }
+  let(:business) { create(:business) }
 
   before do
     request.headers.merge!(headers)
@@ -12,10 +12,14 @@ RSpec.describe LocationsController, type: :controller do
 
   describe '.post' do
     context 'when all attributes are valid' do
-      let(:valid_attributes) { attributes_for(:location) }
+      let(:valid_attributes) do
+        attributes_for(:location, address: Faker::Address.full_address)
+      end
 
       before do
-        post :create, params: valid_attributes
+        post :create, params: {
+          business_id: business.id
+        }.merge!(valid_attributes)
       end
 
       it { is_expected.to respond_with(201) }
@@ -27,7 +31,7 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when attributes are not valid' do
       before do
-        post :create, params: {}
+        post :create, params: { business_id: business.id}
       end
 
       it { is_expected.to respond_with(422) }
@@ -41,7 +45,8 @@ RSpec.describe LocationsController, type: :controller do
     context 'when location exists' do
       before do
         post :create, params: {
-          address: location.address
+          business_id: business.id,
+          address: business.locations.last.address
         }
       end
 

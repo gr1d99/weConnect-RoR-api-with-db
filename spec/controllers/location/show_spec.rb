@@ -4,8 +4,8 @@ RSpec.describe LocationsController, type: :controller do
   let(:json) { JSON.parse(response.body) }
   let(:user) { create(:user) }
   let(:headers) { valid_headers }
-  let(:location_1) { create(:location) }
-  let(:location_2) { create(:location) }
+  let(:business) { create(:business) }
+  let(:location) { business.locations.last }
 
   describe '.get' do
     before do
@@ -14,7 +14,10 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when location exists' do
       before do
-        get :show, params: { id: location_1.id }
+        get :show, params: {
+          business_id: business.id,
+          id: location.id
+        }
       end
 
       it { is_expected.to respond_with(200) }
@@ -26,7 +29,7 @@ RSpec.describe LocationsController, type: :controller do
 
     context 'when location does not exist' do
       before do
-        get :show, params: { id: 345 }
+        get :show, params: { business_id: business.id, id: 345 }
       end
 
       it { is_expected.to respond_with(404) }

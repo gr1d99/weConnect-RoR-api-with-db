@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   post '/login', to: 'authentication#login'
   post '/register', to: 'authentication#register'
 
-  resources :locations
+  resources :businesses do
+    resources :locations
+  end
   resources :categories
-  resources :businesses
 end
