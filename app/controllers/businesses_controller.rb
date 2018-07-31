@@ -1,4 +1,4 @@
-class BusinessController < ApplicationController
+class BusinessesController < ApplicationController
   def index
     render json: { businesses: Business.all }, status: :ok
   end
@@ -22,13 +22,17 @@ class BusinessController < ApplicationController
     business.update(name: business_params[:name])
     business.update_location(business_params[:location_id])
     business.update_category(business_params[:category_id])
-    response = { business: business_response(business), message: Message.business_updated }
+    response =
+      {
+        business: business_response(business),
+        message: Message.business_updated
+      }
+
     render json: response, status: :ok
   end
 
   def destroy
     business.destroy
-
     render json: { message: Message.business_deleted }, status: :ok
   end
 

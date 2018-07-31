@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   post '/register', to: 'authentication#register'
   resources :category
   resources :location
-  resources :business
+  resources :businesses
 end
