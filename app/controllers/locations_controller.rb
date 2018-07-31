@@ -46,6 +46,6 @@ class LocationsController < ApplicationController
   end
 
   def location_object
-    Location.find(params[:id])
+    business.locations.find(params[:id])
   end
 end
